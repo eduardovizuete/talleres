@@ -1,0 +1,72 @@
+###############################################################
+# application.properties.example
+#
+# Este archivo es solo un ejemplo de configuración.
+# NO contiene valores reales ni credenciales.
+#
+# ¿Para qué sirve?
+# - Sirve como plantilla para que cada desarrollador cree su propio application.properties.
+# - NO debe ser usado directamente por la aplicación.
+# - NO debe contener datos sensibles ni ser modificado con valores reales.
+#
+# ¿Diferencia con application.properties?
+# - application.properties: archivo real usado por la app, NO debe subirse al repositorio si contiene credenciales.
+# - application.properties.example: solo ejemplo, sí se sube al repo, nunca debe tener datos reales.
+#
+# ¿Cómo usar?
+# 1. Copia este archivo como application.properties
+# 2. Completa los valores con tus credenciales y endpoints reales.
+# 3. Mantén este archivo example actualizado como referencia para nuevos desarrolladores.
+###############################################################
+
+spring.application.name=workshop-demo
+
+# ================= AWS Credentials =====================
+# Obtenidas desde IAM en AWS Console (Access Key y Secret Key de un usuario con permisos mínimos necesarios)
+spring.cloud.aws.credentials.access-key=${AWS_ACCESS_KEY_ID}   # AWS IAM > Usuario > Access Key ID
+spring.cloud.aws.credentials.secret-key=${AWS_SECRET_ACCESS_KEY}   # AWS IAM > Usuario > Secret Access Key
+spring.cloud.aws.region.static=us-east-1
+
+# ================= SQS Queue ===========================
+# URL de la cola creada en AWS SQS
+spring.cloud.aws.sqs.queue-name=https://sqs.us-east-1.amazonaws.com/123456789012/mi-cola
+spring.cloud.aws.sqs.region=us-east-1
+spring.cloud.aws.sqs.enabled=true
+
+logging.level.root=INFO
+logging.level.com.example.aws.workshop=DEBUG
+logging.level.software.amazon.awssdk=WARN
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n
+
+# ================= PostgreSQL Neon =====================
+# URL: desde el panel de NeonDB (https://neon.tech/)
+spring.datasource.url=jdbc:postgresql://<HOST>/<DB>?sslmode=require&channel_binding=require
+# Usuario y contraseña: desde NeonDB o tu base local
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# ================= S3 bucket ===========================
+# Nombre del bucket creado en AWS o Backblaze
+spring.cloud.aws.s3.bucket-name=workshop-demo-bucket
+spring.cloud.aws.s3.invoice-prefix=invoices/
+
+# ========== Backblaze S3 credentials ===================
+# Obtenidas desde Backblaze B2 panel (App Keys)
+backblaze.s3.access-key=${BACKBLAZE_ACCESS_KEY}   # Backblaze B2 > App Keys > KeyID
+backblaze.s3.secret-key=${BACKBLAZE_SECRET_KEY}   # Backblaze B2 > App Keys > Application Key
+
+# ========== Backblaze B2 S3 endpoint ===================
+# Desde Backblaze B2 panel
+spring.cloud.aws.s3.endpoint=https://s3.us-east-005.backblazeb2.com
+
+# ================= SNS topic ===========================
+# ARN del tópico creado en AWS SNS
+spring.cloud.aws.sns.topic-arn=<YOUR_SNS_TOPIC_ARN>
+
+# ================= Feature toggles =====================
+# Habilita/deshabilita integración S3/SNS
+feature.s3.enabled=true
+feature.sns.enabled=false

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enviar mensaje a Lambda/SQS</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    label { display: block; margin-top: 1em; }
+    input, textarea { width: 100%; max-width: 400px; }
+    button { margin-top: 1em; }
+    .result { margin-top: 2em; }
+  </style>
+</head>
+<body>
+  <h2>Enviar mensaje a Lambda/SQS</h2>
+  <form id="lambdaForm">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="products">Productos (separados por coma):</label>
+    <textarea id="products" name="products" required></textarea>
+    <button type="submit">Enviar</button>
+  </form>
+  <div class="result" id="result"></div>
+  <script>
+    const lambdaUrl = "https://q5rsh3azvxyjmwrireu2squ6cu0zmfyo.lambda-url.us-east-1.on.aws/";
+    document.getElementById('lambdaForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const products = document.getElementById('products').value;
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = 'Enviando...';
+      try {
+        const response = await fetch(lambdaUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, products })
+        });
+        const data = await response.json();
+        resultDiv.textContent = 'Respuesta: ' + JSON.stringify(data);
+      } catch (err) {
+        resultDiv.textContent = 'Error: ' + err;
+      }
+    });
+  </script>
+</body>
+</html>

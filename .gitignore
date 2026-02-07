@@ -1,0 +1,42 @@
+target/
+bin/
+
+# Build outputs, IDE files, and OS junk
+/build/
+/build-*/
+target/
+.gradle/
+.idea/
+*.iml
+*.class
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+# Python virtualenv
+.venv/
+__pycache__/
+*.pyc
+
+# Lambda package
+lambda.zip
+
+# Terraform state
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# LocalStack data
+localstack/.localstack/
+
+# Node/Angular
+node_modules/
+
+# VSCode
+.vscode/
+
+# OS
+.env
+
